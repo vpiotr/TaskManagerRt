@@ -2,6 +2,7 @@
 import React, { useState, useContext } from "react";
 import AddProjectPopup from "./AddProjectPopup";
 import ProjectList from "./ProjectList";
+import packageInfo from '../package.json';
 
 import {
   StoreContext,
@@ -69,11 +70,13 @@ function App() {
     );
   }
 
-  const SummaryFooter = ({ projectCount, taskCount }) => (
+  const SummaryFooter = ({ projectCount, taskCount, version }) => (
     <footer>
       <span>Total Projects: {projectCount}</span>
       &nbsp;|&nbsp;
       <span>Total Tasks: {taskCount}</span>
+      &nbsp;|&nbsp;
+      <span>Version {version}</span>
     </footer>
   );
 
@@ -94,7 +97,7 @@ function App() {
         toggleProjectCollapse={toggleProjectCollapse}
         collapsedProjects={collapsedProjects}
       />
-      <SummaryFooter projectCount={projectCount} taskCount={taskCount} />
+      <SummaryFooter projectCount={projectCount} taskCount={taskCount} version={packageInfo.version} />
     </div>
   );
 }
