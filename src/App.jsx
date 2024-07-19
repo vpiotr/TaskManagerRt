@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import AddProjectPopup from "./AddProjectPopup";
 import ProjectList from "./ProjectList";
 import packageInfo from '../package.json';
+import SummaryFooter from './SummaryFooter';
 
 import {
   StoreContext,
@@ -58,16 +59,6 @@ function App() {
         : currentCollapsedProjects
     );
   }
-
-  const SummaryFooter = ({ projectCount, taskCount, version }) => (
-    <footer>
-      <span>Total Projects: {projectCount}</span>
-      &nbsp;|&nbsp;
-      <span>Total Tasks: {taskCount}</span>
-      &nbsp;|&nbsp;
-      <span>Version {version}</span>
-    </footer>
-  );
 
   const projectCount = state.projects.length;
   const taskCount = state.projects.reduce((total, project) => total + project.tasks.length, 0);
