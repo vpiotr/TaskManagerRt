@@ -24,6 +24,7 @@ function App() {
 
   const addProject = (e, newProjectName, setNewProjectName) => {
     e.preventDefault(); // Prevent form submission from reloading the page
+    console.log("Start of addProject, newProjectName: " + newProjectName);
     // Check if the project name already exists
     const isNameExist = state.projects.some(
       (project) => project.name === newProjectName
@@ -46,6 +47,7 @@ function App() {
       tasks: [], // New projects start with no tasks
     };
 
+    console.log("Dispatching ADD_PROJECT with payload: ", newProject);
     dispatch({ type: ADD_PROJECT, payload: newProject });
     setNewProjectName(""); // Reset the input field after adding
     return true;

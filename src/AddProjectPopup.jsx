@@ -31,12 +31,17 @@ function AddProjectForm({ addProject, closePopup }) {
             onChange={(e) => setNewProjectName(e.target.value)}
             placeholder="New Project Name"
             required
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                handleSubmit(e); // Call handleSubmit directly or e.currentTarget.form.submit();
+              }
+            }}            
           />
           <div className="buttons-container">
-            <button onClick={closePopup} className="close-btn">Close</button>
             <button type="submit" className="add-project">
               Add Project
             </button>
+            <button onClick={closePopup} className="popup-close-btn">Close</button>
           </div>
         </form>
       </div>
