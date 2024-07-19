@@ -1,63 +1,55 @@
 // Import necessary hooks and other dependencies
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useContext, useEffect, useRef, useCallback } from 'react';
+import { StoreContext } from "./store"; // Adjust the path as necessary
 
 // Define the AddProjectForm component
 function AddProjectForm({ addProject, closePopup }) {
   // State for the new project name
   const [newProjectName, setNewProjectName] = useState('');
   const inputRef = useRef(null);
+  const { state, dispatch } = useContext(StoreContext);
 
   useEffect(() => {
     // Step 3: Set focus on the input element when the component mounts
     inputRef.current.focus();
   }, []);
 
+  useEffect(() => {
+    inputRef.current.focus();
 
-  const handleEnter = (e) => {
-    const projectName = inputRef.current.value;
-    setNewProjectName(projectName);
-
-    e.preventDefault(); // Prevent form submission
-    if (!projectName.trim()) {
-      inputRef.current.setCustomValidity('Project name is required.'); // Set custom validation message
-      inputRef.current.reportValidity(); // Show the validation message
-      inputRef.current.setCustomValidity(''); // Reset the custom validity message to ensure form can be submitted later
-    } else {
-      if (addProject(e, projectName, setNewProjectName)) {
-        closePopup(); // Close the popup after adding the project
+    // Define the function to handle the Escape key press
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        closePopup(); // Call the onClose function to close the popup
       }
-    }
-  }
+    };
+
+    // Attach the event listener to the window object
+    window.addEventListener('keydown', handleEscape);
+
+    // Return a cleanup function to remove the event listener
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [closePopup]); // Include onClose in the dependency array if it could change
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent default form submission behavior
+
+    // Check if the project name already exists
+    const isNameExist = state.projects.some(
+      (project) => project.name === newProjectName
+    );
+
+    if (isNameExist) {
+      alert("Project name already exists. Please choose a different name.");
+      return false; // Stop the function if the name already exists
+    }
+
     if (addProject(e, newProjectName, setNewProjectName)) {
         closePopup(); // Close the popup after adding the project
     }
   };
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Enter') {
-        // Prevent default action if necessary, e.g., form submission
-        e.preventDefault();
-        // Trigger the same action as your handleEnter function
-        handleEnter(e);
-      } else if (e.key === 'Escape') {
-        // Prevent default action if necessary
-        e.preventDefault();
-        closePopup();
-      }
-    };
-
-    // Attach the event listener to the document
-    document.addEventListener('keydown', handleKeyDown);
-
-    // Cleanup function to remove the event listener
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [addProject, closePopup]); // Add dependencies here if they are used inside handleKeyDown
 
   // Render the form
   return (

@@ -26,16 +26,6 @@ function App() {
   const addProject = (e, newProjectName, setNewProjectName) => {
     e.preventDefault(); // Prevent form submission from reloading the page
 
-    // Check if the project name already exists
-    const isNameExist = state.projects.some(
-      (project) => project.name === newProjectName
-    );
-
-    if (isNameExist) {
-      alert("Project name already exists. Please choose a different name.");
-      return false; // Stop the function if the name already exists
-    }
-
     let newId = 1;
     
     if (state.projects && state.projects.length > 0) {
