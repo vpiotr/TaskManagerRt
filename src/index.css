@@ -148,3 +148,19 @@ footer {
 .project-list {
   margin-top: 20px;
 }
+
+/* Add space between buttons */
+.confirm-btn,
+.cancel-btn {
+  margin: 0 5px; /* Adjust the spacing as needed */
+}
+
+/* Hover effect for Confirm button */
+.confirm-btn:hover {
+  background-color: #1565c0; /* A slightly darker shade of blue for hover */
+}
+
+/* Hover effect for Cancel button */
+.cancel-btn:hover {
+  background-color: #d32f2f; /* A slightly darker shade of red for hover */
+}
