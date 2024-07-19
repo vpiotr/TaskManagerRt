@@ -2,11 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import TaskList from "./TaskList";
 import AddTaskPopup from "./AddTaskPopup";
 import { StoreContext, ADD_TASK, REMOVE_PROJECT, REMOVE_TASK } from "./store"; // Import necessary actions
+import ConfirmationPopup from "./ConfirmationPopup";
 
 const ProjectList = ({ toggleProjectCollapse, collapsedProjects }) => {
   const [showAddTaskPopup, setShowAddTaskPopup] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const { state, dispatch } = useContext(StoreContext); // Use useContext to access the store
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState(null);
 
   const handleAddTaskClick = (projectId) => {
     setSelectedProjectId(projectId);
@@ -21,6 +24,7 @@ const ProjectList = ({ toggleProjectCollapse, collapsedProjects }) => {
 
   const removeProject = (projectId) => {
     dispatch({ type: REMOVE_PROJECT, payload: projectId });
+    setShowConfirmPopup(false); // Close the confirmation popup
   };
 
   const removeTask = (projectId, taskId) => {
@@ -32,6 +36,12 @@ const ProjectList = ({ toggleProjectCollapse, collapsedProjects }) => {
 
   return (
     <div className="project-list">
+      <ConfirmationPopup
+        isOpen={showConfirmPopup}
+        onClose={() => setShowConfirmPopup(false)}
+        onConfirm={() => removeProject(projectToDelete)}
+        message="Are you sure you want to delete this project?"
+      />
       {state.projects.map((project) => (
         <div key={project.id}>
           <div onClick={() => toggleProjectCollapse(project.id)}>
@@ -41,17 +51,20 @@ const ProjectList = ({ toggleProjectCollapse, collapsedProjects }) => {
           {!collapsedProjects.includes(project.id) && (
             <div>
               <button
-                onClick={() => removeProject(project.id)}
+                onClick={() => {
+                  setProjectToDelete(project.id);
+                  setShowConfirmPopup(true);
+                }}
                 className="remove-project"
               >
                 Remove Project
               </button>
               <button
-              onClick={() => handleAddTaskClick(project.id)}
-              className="add-task"
-            >
-              Add Task
-            </button>              
+                onClick={() => handleAddTaskClick(project.id)}
+                className="add-task"
+              >
+                Add Task
+              </button>
               <TaskList
                 tasks={project.tasks}
                 projectId={project.id}
@@ -69,7 +82,7 @@ const ProjectList = ({ toggleProjectCollapse, collapsedProjects }) => {
           onClose={() => setShowAddTaskPopup(false)}
           onAddTask={handleAddTask}
         />
-      )}      
+      )}
     </div>
   );
 };
