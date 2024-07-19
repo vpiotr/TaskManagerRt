@@ -3,13 +3,18 @@
   "version": "1.0.0",
   "description": "A simple task manager application built with React.",
   "main": "index.js",
+  "homepage": "https://vpiotr.github.io/TaskManagerRt",
+  "repository": "https://github.com/vpiotr/TaskManagerRt",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
+    "gh-pages": "^6.1.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-scripts": "^5.0.1"

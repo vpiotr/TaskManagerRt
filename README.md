@@ -25,3 +25,6 @@ Command to run the application:
 
 Can be deployed to GitHub pages.
 
+Use:
+
+    npm run deploy
