@@ -14,7 +14,6 @@ const TaskList = ({ tasks, projectId, onRemoveTask }) => {
 
   return (
     <ul>
-      // In the render or return section, where you list tasks
       <ConfirmationPopup
         isOpen={showConfirmPopup}
         onClose={() => setShowConfirmPopup(false)}
@@ -23,20 +22,24 @@ const TaskList = ({ tasks, projectId, onRemoveTask }) => {
         }
         message="Are you sure you want to delete this task?"
       />
-      {tasks.map((task) => (
-        <li key={`${projectId}-${task.id}`}>
-          {task.id}: {task.name}
-          <button
-            onClick={() => {
-              setTaskToDelete(task.id);
-              setShowConfirmPopup(true);
-            }}
-            className="remove-task"
-          >
-            Remove
-          </button>
-        </li>
-      ))}
+      {tasks.length === 0 ? (
+        <li className="task-list-placeholder">No tasks available</li>
+      ) : (
+        tasks.map((task) => (
+          <li key={`${projectId}-${task.id}`}>
+            {task.id}: {task.name}
+            <button
+              onClick={() => {
+                setTaskToDelete(task.id);
+                setShowConfirmPopup(true);
+              }}
+              className="remove-task"
+            >
+              Remove
+            </button>
+          </li>
+        ))
+      )}
     </ul>
   );
 };
