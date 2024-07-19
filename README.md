@@ -28,3 +28,9 @@ Can be deployed to GitHub pages.
 Use:
 
     npm run deploy
+
+# Versioning
+
+To increase version number run (make sure there are no uncommited changes in the code):
+
+    npm version patch 
