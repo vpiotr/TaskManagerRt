@@ -15,6 +15,26 @@ function AddTaskPopup({ projectId, onClose, onAddTask }) {
     }
   }, []); // Empty dependency array means this effect runs once on mount
 
+  useEffect(() => {
+    inputRef.current.focus();
+
+    // Define the function to handle the Escape key press
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        onClose(); // Call the onClose function to close the popup
+      }
+    };
+
+    // Attach the event listener to the window object
+    window.addEventListener('keydown', handleEscape);
+
+    // Return a cleanup function to remove the event listener
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [onClose]); // Include onClose in the dependency array if it could change
+
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
