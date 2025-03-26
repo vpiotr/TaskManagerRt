@@ -1,13 +1,15 @@
 // Import necessary hooks and other dependencies
-import React, { useState, useContext, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { StoreContext } from "./store"; // Adjust the path as necessary
+import PropTypes from 'prop-types';
 
 // Define the AddProjectForm component
-function AddProjectForm({ addProject, closePopup }) {
+function AddProjectForm(props) {
+  const { addProject, closePopup } = props;
   // State for the new project name
   const [newProjectName, setNewProjectName] = useState('');
   const inputRef = useRef(null);
-  const { state, dispatch } = useContext(StoreContext);
+  const { state } = useContext(StoreContext);
 
   useEffect(() => {
     // Step 3: Set focus on the input element when the component mounts
@@ -76,6 +78,10 @@ function AddProjectForm({ addProject, closePopup }) {
   );
 }
 
+AddProjectForm.propTypes = {
+  addProject: PropTypes.func,
+  closePopup: PropTypes.func,
+};
 
 // Export the component
 export default AddProjectForm;

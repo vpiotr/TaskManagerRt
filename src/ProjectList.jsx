@@ -3,6 +3,7 @@ import TaskList from "./TaskList";
 import AddTaskPopup from "./AddTaskPopup";
 import { StoreContext, ADD_TASK, REMOVE_PROJECT, REMOVE_TASK } from "./store"; // Import necessary actions
 import ConfirmationPopup from "./ConfirmationPopup";
+import PropTypes from 'prop-types';
 
 const ProjectList = ({ toggleProjectCollapse, collapsedProjects }) => {
   const [showAddTaskPopup, setShowAddTaskPopup] = useState(false);
@@ -85,6 +86,11 @@ const ProjectList = ({ toggleProjectCollapse, collapsedProjects }) => {
       )}
     </div>
   );
+};
+
+ProjectList.propTypes = {
+  toggleProjectCollapse: PropTypes.func, 
+  collapsedProjects: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default ProjectList;

@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 // Action Types
 export const ADD_PROJECT = 'ADD_PROJECT';
@@ -27,7 +28,7 @@ const loadState = () => {
       return initialProjects; // Use initialProjects if no data in local storage
     }
     return JSON.parse(serializedState);
-  } catch (err) {
+  } catch { 
     return initialProjects; // Fallback to initialProjects in case of any errors
   }
 };
@@ -48,7 +49,7 @@ function reducer(state, action) {
             ...state,
             projects: state.projects.filter((project) => project.id !== action.payload),
         };
-    case ADD_TASK:
+    case ADD_TASK: {
         const project = state.projects.find(p => p.id === action.payload.projectId);
         let newTaskId = 1; // Default starting ID
     
@@ -71,6 +72,7 @@ function reducer(state, action) {
                 : project
             ),
         };
+      }
     case REMOVE_TASK:
         return {
             ...state,
@@ -109,6 +111,10 @@ export function StoreProvider({ children }) {
     </StoreContext.Provider>
   );
 }
+
+StoreProvider.propTypes = {
+  children: PropTypes.any,
+};
 
 export function useStore() {
   return useContext(StoreContext);

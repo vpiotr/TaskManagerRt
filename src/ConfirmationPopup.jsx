@@ -1,5 +1,6 @@
 // src/ConfirmationPopup.jsx
 import React, { useEffect } from "react";
+import PropTypes from 'prop-types';
 
 function ConfirmationPopup({ isOpen, onClose, onConfirm, message }) {
   if (!isOpen) return null;
@@ -36,5 +37,12 @@ function ConfirmationPopup({ isOpen, onClose, onConfirm, message }) {
     </div>
   );
 }
+
+ConfirmationPopup.propTypes = {
+  isOpen: PropTypes.bool, 
+  onClose: PropTypes.func, 
+  onConfirm: PropTypes.func, 
+  message: PropTypes.string
+};
 
 export default ConfirmationPopup;

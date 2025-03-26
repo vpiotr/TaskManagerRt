@@ -1,6 +1,7 @@
 // src/TaskList.jsx
 import React, { useState } from "react";
 import ConfirmationPopup from "./ConfirmationPopup";
+import PropTypes from 'prop-types';
 
 const TaskList = ({ tasks, projectId, onRemoveTask }) => {
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
@@ -42,6 +43,12 @@ const TaskList = ({ tasks, projectId, onRemoveTask }) => {
       )}
     </ul>
   );
+};
+
+TaskList.propTypes = {
+  tasks: PropTypes.arrayOf(PropTypes.object),
+  projectId: PropTypes.string,
+  onRemoveTask: PropTypes.func,
 };
 
 export default TaskList;

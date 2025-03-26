@@ -52,14 +52,6 @@ function App() {
     );
   };
 
-  const expandProject = (projectId) => {
-    setCollapsedProjects((currentCollapsedProjects) =>
-      currentCollapsedProjects.includes(projectId)
-        ? currentCollapsedProjects.filter((id) => id !== projectId)
-        : currentCollapsedProjects
-    );
-  }
-
   const projectCount = state.projects.length;
   const taskCount = state.projects.reduce((total, project) => total + project.tasks.length, 0);
     

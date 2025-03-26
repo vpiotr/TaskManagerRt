@@ -2,11 +2,12 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 
 import { StoreContext } from "./store"; // Adjust the path as necessary
+import PropTypes from 'prop-types';
 
 function AddTaskPopup({ projectId, onClose, onAddTask }) {
   const [newTaskName, setNewTaskName] = useState("");
   const inputRef = useRef(null);
-  const { state, dispatch } = useContext(StoreContext);
+  const { state } = useContext(StoreContext);
 
   useEffect(() => {
     // Check if the input element is available and then set focus
@@ -95,5 +96,11 @@ function AddTaskPopup({ projectId, onClose, onAddTask }) {
     </div>
   );
 }
+
+AddTaskPopup.propTypes = {
+  projectId: PropTypes.string, 
+  onClose: PropTypes.func, 
+  onAddTask: PropTypes.func
+};
 
 export default AddTaskPopup;
