@@ -39,7 +39,7 @@ function AddProjectForm(props) {
     e.preventDefault(); // Prevent default form submission behavior
 
     // Check if the project name already exists
-    const isNameExist = state.projects.some(
+    const isNameExist = (state !== undefined) && (state['projects'] !== undefined) && state.projects.some(
       (project) => project.name === newProjectName
     );
 

@@ -90,7 +90,11 @@ function reducer(state, action) {
   }
 }
 
-export const StoreContext = createContext();
+export const StoreContext = createContext(
+  {
+    projects: [],
+  },
+);
 
 export function StoreProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
