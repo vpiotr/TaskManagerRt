@@ -61,8 +61,8 @@ function App() {
       <button onClick={toggleAddProjectPopup}>Add New Project</button>
       {showAddProjectPopup && (
         <AddProjectPopup
-          addProject={addProject}
-          closePopup={toggleAddProjectPopup}
+          onAddProject={addProject}
+          onClose={toggleAddProjectPopup}
         />
       )}
       <ProjectList

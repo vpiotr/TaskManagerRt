@@ -1,11 +1,9 @@
-// Import necessary hooks and other dependencies
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import { StoreContext } from "./store"; // Adjust the path as necessary
+import { StoreContext } from "./store"; 
 import PropTypes from 'prop-types';
 
-// Define the AddProjectForm component
-function AddProjectForm(props) {
-  const { addProject, closePopup } = props;
+function AddProjectPopup(props) {
+  const { onAddProject, onClose } = props;
   // State for the new project name
   const [newProjectName, setNewProjectName] = useState('');
   const inputRef = useRef(null);
@@ -22,7 +20,7 @@ function AddProjectForm(props) {
     // Define the function to handle the Escape key press
     const handleEscape = (event) => {
       if (event.key === 'Escape') {
-        closePopup(); // Call the onClose function to close the popup
+        onClose(); // Call the onClose function to close the popup
       }
     };
 
@@ -33,7 +31,7 @@ function AddProjectForm(props) {
     return () => {
       window.removeEventListener('keydown', handleEscape);
     };
-  }, [closePopup]); // Include onClose in the dependency array if it could change
+  }, [onClose]); 
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent default form submission behavior
@@ -48,8 +46,8 @@ function AddProjectForm(props) {
       return false; // Stop the function if the name already exists
     }
 
-    if (addProject(e, newProjectName, setNewProjectName)) {
-        closePopup(); // Close the popup after adding the project
+    if (onAddProject(e, newProjectName, setNewProjectName)) {
+        onClose(); // Close the popup after adding the project
     }
   };
 
@@ -70,7 +68,7 @@ function AddProjectForm(props) {
             <button type="submit" className="add-project">
               Add Project
             </button>
-            <button onClick={closePopup} className="popup-close-btn">Close</button>
+            <button onClick={onClose} className="popup-close-btn">Close</button>
           </div>
         </form>
       </div>
@@ -78,10 +76,10 @@ function AddProjectForm(props) {
   );
 }
 
-AddProjectForm.propTypes = {
-  addProject: PropTypes.func,
-  closePopup: PropTypes.func,
+AddProjectPopup.propTypes = {
+  onAddProject: PropTypes.func,
+  onClose: PropTypes.func,
 };
 
 // Export the component
-export default AddProjectForm;
+export default AddProjectPopup;

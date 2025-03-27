@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { StoreContext } from './store'; // Adjust the path as necessary
-import AddProjectForm from './AddProjectPopup.jsx';
+import AddProjectPopup from './AddProjectPopup.jsx';
 import '@testing-library/jest-dom'
 
 jest.mock('./store');
@@ -10,7 +10,7 @@ describe('AddProjectPopup', () => {
   it('renders correctly', () => {
     const { getByPlaceholderText, getByText } = render(
       <StoreContext.Provider value={{ projects: [] }}>
-        <AddProjectForm addProject={() => {}} closePopup={() => {}} />
+        <AddProjectPopup onAddProject={() => {}} onClose={() => {}} />
       </StoreContext.Provider>
     );
 
@@ -18,13 +18,13 @@ describe('AddProjectPopup', () => {
     expect(getByText('Close')).toBeInTheDocument();
   });
 
-  it('calls addProject when form is submitted', () => {
+  it('calls onAddProject when form is submitted', () => {
     const handleAdd = jest.fn();
     const { getByPlaceholderText, getByText } = render(
       <StoreContext.Provider value={{ projects: [] }}>
-        <AddProjectForm
-          addProject={handleAdd}
-          closePopup={() => {}}
+        <AddProjectPopup
+          onAddProject={handleAdd}
+          onClose={() => {}}
         />
       </StoreContext.Provider>
     );
@@ -38,13 +38,13 @@ describe('AddProjectPopup', () => {
     expect(handleAdd).toHaveBeenCalledWith(expect.anything(), 'Test Project', expect.any(Function));
   });
 
-  it('calls addProject with correct arguments when project is added successfully', () => {
+  it('calls onAddProject with correct arguments when project is added successfully', () => {
     const handleAdd = jest.fn();
     const { getByPlaceholderText, getByText } = render(
       <StoreContext.Provider value={{ projects: [] }}>
-        <AddProjectForm
-          addProject={handleAdd}
-          closePopup={() => {}}
+        <AddProjectPopup
+          onAddProject={handleAdd}
+          onClose={() => {}}
         />
       </StoreContext.Provider>
     );
@@ -57,13 +57,13 @@ describe('AddProjectPopup', () => {
     expect(handleAdd).toHaveBeenCalledTimes(1);
   });
 
-  it('calls closePopup when Close button is clicked', () => {
+  it('calls onClose when Close button is clicked', () => {
     const handleClose = jest.fn();
     const { getByText } = render(
       <StoreContext.Provider value={{ projects: [] }}>
-        <AddProjectForm
-          addProject={() => {}}
-          closePopup={handleClose}
+        <AddProjectPopup
+          onAddProject={() => {}}
+          onClose={handleClose}
         />
       </StoreContext.Provider>
     );
@@ -74,13 +74,13 @@ describe('AddProjectPopup', () => {
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
 
-  it('calls handleEscape when Escape key is pressed', () => {
+  it('calls onClose when Escape key is pressed', () => {
     const handleClose = jest.fn();
     render(
       <StoreContext.Provider value={{ projects: [] }}>
-        <AddProjectForm
-          addProject={() => {}}
-          closePopup={handleClose}
+        <AddProjectPopup
+          onAddProject={() => {}}
+          onClose={handleClose}
         />
       </StoreContext.Provider>
     );
