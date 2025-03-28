@@ -1,4 +1,3 @@
-// src/AddTaskPopup.jsx
 import React, { useState, useRef, useEffect, useContext } from "react";
 
 import { StoreContext } from "./store"; // Adjust the path as necessary
@@ -38,9 +37,10 @@ function AddTaskPopup({ projectId, onClose, onAddTask }) {
   
   const handleSubmit = (e) => {
     e.preventDefault();
+    const stateProjectsExists = (state !== undefined) && (state['projects'] !== undefined);
 
     // Find the project by its ID
-    const project = state.projects.find(
+    const project = !stateProjectsExists ? undefined : state.projects.find(
       (project) => project.id === projectId
     );
 
@@ -57,7 +57,7 @@ function AddTaskPopup({ projectId, onClose, onAddTask }) {
       return project && project.tasks.some((task) => task.name === taskName);
     };
 
-    if (isTaskNameExist(projectId, newTaskName)) {
+    if (stateProjectsExists && isTaskNameExist(projectId, newTaskName)) {
       alert(
         "Task name already exists in this project. Please choose a different name."
       );

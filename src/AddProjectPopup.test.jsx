@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { StoreContext } from './store'; // Adjust the path as necessary
+import { StoreContext } from './store.jsx'; // Adjust the path as necessary
 import AddProjectPopup from './AddProjectPopup.jsx';
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom';
 
 jest.mock('./store');
 
